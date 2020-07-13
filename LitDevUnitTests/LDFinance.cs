@@ -36,9 +36,9 @@ namespace LitDevUnitTests
             Assert.IsFalse( string.IsNullOrWhiteSpace(data["changesPercentage"].ToString()) );
             Assert.AreEqual("Apple Inc.", data["companyName"].ToString());
             Assert.AreEqual("Nasdaq Global Select", data["exchange"].ToString());
-            Assert.AreEqual("Computer Hardware", data["industry"].ToString() );
+            Assert.AreEqual("Consumer Electronics", data["industry"].ToString() );
             Assert.IsFalse( string.IsNullOrWhiteSpace( data["description"].ToString() ) );
-            Assert.AreEqual("Timothy D. Cook", data["ceo"].ToString());
+            Assert.AreEqual("Mr. Timothy D. Cook", data["ceo"].ToString());
             Assert.AreEqual("Technology", data["sector"].ToString());
             Assert.AreEqual("https://financialmodelingprep.com/images-New-jpg/AAPL.jpg", data["image"].ToString());
         }
@@ -104,20 +104,36 @@ namespace LitDevUnitTests
         {
             SetUp();
             Primitive AnnualIncome = LDFinances.Statement("AAPL", "Annual", "Income");
+            
             Primitive QuarterlyIncome = LDFinances.Statement("AAPL", "Quarterly", "Income");
             Primitive AnnualBalance = LDFinances.Statement("AAPL", "Annual", "Balance");
             Primitive QuarterlyBalance = LDFinances.Statement("AAPL", "Quarterly", "Balance");
             Primitive AnnualCashFlow = LDFinances.Statement("AAPL", "Annual", "CashFlow");
             Primitive QuarterlyCashFlow = LDFinances.Statement("AAPL", "Quarterly", "CashFlow");
 
+            /**
+             * Annual Statements Testing
+             */
             Assert.IsTrue( Array.IsArray(AnnualIncome) );
+            Assert.IsTrue( double.Parse(AnnualIncome[1]["CostOfRevenue"]) > 0);
+            
             Assert.IsTrue( Array.IsArray(AnnualBalance) );
+            Assert.IsTrue( double.Parse(AnnualBalance[1]["NetDebt"]) > 0 );
+
             Assert.IsTrue( Array.IsArray(AnnualCashFlow));
+            Assert.IsTrue( double.Parse(AnnualCashFlow[1]["OperatingCashFlow"]) > 0 );
 
+            /**
+             * Quarterly Statement Testing
+             */
             Assert.IsTrue( Array.IsArray(QuarterlyIncome) );
-            Assert.IsTrue( Array.IsArray(QuarterlyBalance) );
-            Assert.IsTrue( Array.IsArray(QuarterlyCashFlow) );
+            Assert.IsTrue(double.Parse(QuarterlyIncome[1]["CostOfRevenue"]) > 0);
 
+            Assert.IsTrue( Array.IsArray(QuarterlyBalance) );
+            Assert.IsTrue(double.Parse(QuarterlyBalance[1]["NetDebt"]) > 0);
+
+            Assert.IsTrue( Array.IsArray(QuarterlyCashFlow) );
+            Assert.IsTrue(double.Parse(AnnualCashFlow[1]["OperatingCashFlow"]) > 0);
         }
     }
 }
