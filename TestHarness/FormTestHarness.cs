@@ -709,6 +709,17 @@ namespace TestHarness
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
+            //Primitive result = LDftp.ListFiles("gnu", "ftp.gnu.org", "", "");
+            //result = LDftp.ListFiles("ftp://ftp.gnu.org/gnu/","ftp://ftp.gnu.org/gnu/","","");
+            Primitive result = LDftp.ListFiles("Notebooks/15,4 Zoll Notebooks", "download.chiligreen.com", "", "");
+            TextWindow.WriteLine(result);
+               
+            Primitive datFile = "C:/Users/steve/Documents/SmallBasic/steve/database.db";
+            Primitive database = LDDataBase.ConnectSQLite(datFile);
+            Primitive dataView = LDControls.AddDataView(240, 350, "");
+            LDDataBase.EditTable(datFile, "Cars", dataView);
+            LDDataBase.SaveTable(database, dataView);
+
             LDTranslate.Translate("Ein Besuch im Zoo.", "de", "en");
 
             Primitive img1 = LDClipboard.GetImage();
